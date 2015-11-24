@@ -1,0 +1,260 @@
+---
+title: "Mathematical Modeling and Simulation"
+author: Rhyz C. Gomez, Jasper Montero and Sisteta Kamdon
+date: November 27, 2015 
+output: pdf_document
+---
+
+**1. In the pig problem, perform a sensitivity analysis based on the cost per day of keeping the pig. Consider the effect both on the best time to sell and on the resulting profit.**
+
+
+**Sensitivity Analysis on the Cost**
+
+Assume that instead of the cost of 0.45 cent per day, the cost of keeping the pig is uncertain. Hence, let $C = ct$, then $P = 130 + 1.25t - 0.05t^2 - ct$, where `P` is the revenue from selling the pig and `t` is the time to sell the pig. To get the maximum profit, we use the concept of maxima in calculus. So, we find the derivative of `P`, set it to zero, then solve for `t`. `t` is the best time to sell the pig to get the maximum profit.   
+
+$$P' = 1.25 - 0.1t - c$$
+$$0 = 1.25 - 0.1t - c$$
+$$0.1t = 1.25 - c$$
+$$t = (1.25 - c)/0.1$$
+$$t = (25-20c)/2$$
+
+Since $t >= 0$, then $(25-20c)/2 >= 0$. Solve for c and we get $0<=c<=1.25$. Hence, to keep `t` positive, the cost should be between 0 and 1.25. 
+
+```{r,echo=FALSE,fig.height=4,fig.width=7}
+library(knitr)
+c <- c(0.45,0.5,0.55,0.6,0.65,0.7)
+t <- (25-20*c)/2
+costandtime <- data.frame(costperday=c,time=t)
+kable(costandtime)
+plot(c,t, xlab="costof keeping the pig($)", main="Sensitivity of The Best time of Selling to Cost", ylab="time",type="l",lwd=3,col="springgreen")
+```
+
+Based on the table, we can find the ratio of the changes in time and cost or use the derivative of `t`. Thus, 
+$$dt/dc = -10$$
+
+The sensitivity of the best time to sell to cost is then -0.5625. Hence, a percent increase in the cost of keeping the pig will led to a shorter time, i.e. 0.56% shorter, of selling the pig to get the maximum profit.
+
+To determine the sensitivity of the profit to cost, substitute the equation of `t` in `P`. We then get profit in terms of the cost. 
+
+$$P = 5c^2 - 12.5c + 137.8125$$
+
+```{r,echo=FALSE, fig.height=4,fig.width=7}
+c <- c(0.45,0.5,0.55,0.6,0.65,0.7)
+t <- (25-20*c)/2
+r <- 5*c^2 - 12.5*c + 137.8125
+costtimeprofit <- data.frame(costperday=c,time=t,profit = r)
+kable(costtimeprofit)
+plot(c,r,xlab="cost of keeping the pig",ylab="Profit",type="l",main="Sensitivity of Profit to Cost of Keeping the Pig($)",lwd=3,col="springgreen")
+```
+
+Using the table above, the ratio of the changes in profit and cost is
+
+$$dP/dc = (133.20-132.81)-(0.45-0.5)$$
+$$dP/dc = -7.8$$
+
+Thus, the sensitivity of the profit to cost of keeping the pig is
+
+$$S(P,c) = -7.8*(0.45/133.2)$$
+$$S(P,c) = -0.027$$
+
+Hence, a percent increase in the cost of keeping the pig will decrease maximum profit by 0.27%.
+
+
+**If a new feed costing 60 cents/day would let the pig growth at the rate of 7 lbs/day, would it be worth switching feed?**
+
+The new feed has a different cost and it makes the growth rate of the pig increase. This will led to a new equation for the profit. 
+
+$$C = 0.60t$$
+$$w = 200 + 7t$$
+$$P = 130 + 1.95t - 0.07t^2$$
+
+```{r,echo=FALSE, fig.height=4,fig.width=10}
+t1 <- seq(6,25,2)
+r1 <- 130 + 1.95*t1 - 0.07*t1^2
+timeprofit <- data.frame(time=t1,profit = r1)
+kable(timeprofit)
+t0 <- seq(6,25,length=1000)
+r0 <- 130 + 1.95*t0 - 0.07*t0^2
+plot(t0,r0,xlab="Time to Sell",ylab="Profit",type="l",main="Profit for Every Best Time Sold ($)",lwd=3,col="royalblue")
+```
+
+
+With the new profit equation, we can get a new maximum profit.
+$$P' = 1.95 - 0.14t$$
+$$0 = 1.95 - 0.14t$$
+$$t = 13.93$$
+
+This is approximately 14 days. With $t = 14days$, $P = 143.58 dollars$. Hence, the new feeds can give a better maximum profit. Therefore, it is better to change the feeds.  
+
+**What is the minimum improvement in growth rate that would make this new feed worthwhile?**
+
+To find the minimum improvement in growth rate, we need to take the relationship of the growth rate to time using the profit equation and setting growth rate as a parameter.
+
+$$P = 130 + 0.65gt - 2.6t - 0.01 gt^2$$
+$$P' = 0.65 g - 2.6 - 0.02gt$$
+$$0 = 0.65 g - 2.6 - 0.02gt$$
+$$t = (65g - 260)/2g$$
+
+Solve for `g` when $t >= 0$, `0 <= g <= 4`. 
+
+```{r,echo=FALSE, fig.height=4,fig.width=10}
+g2 <- 4:10
+t2 <- (65*g2 - 260)/(2*g2)
+r2 <- 130 + 1.95*t2 - 0.07*t2^2
+growthtimeprofit <- data.frame(growth=g2,time=t2,profit = r2)
+kable(growthtimeprofit)
+g0 <- seq(4,10,length=1000)
+t20 <- (65*g0 - 260)/(2*g0)
+r20 <- 130 + 1.95*t20 - 0.07*t20^2
+plot(g0,r20,xlab="Growth Rate of Pig (lbs/day)",ylab="Profit",type="l",main="Sensitivity of Profit to Growth Rate($)",lwd=3,col="steelblue")
+```
+
+\newpage
+
+**2. Reconsider the pig problem, but now assume that the price for pigs is starting to level off. Let**
+
+$$p = 0.65 - 0.01t + 0.00004t^2$$
+
+Represent the price for pigs (cents/lbs) after `t` days.
+
+*a. Graph along with our original price equation. Explain why our original price equation could be considered as an approximation to `p` for values of `t` near zero.*
+
+```{r, echo=FALSE,fig.height=8, fig.width=10}
+timex <- seq(0,7,length=1000)
+p1 <- 0.65 - 0.01*timex
+p2 <- 0.65 - 0.01*timex + 0.00004*(timex^2)
+plot(timex,p1,col="seagreen",lwd=3,xlab="Time to Sell in Days", ylab="price for pigs (cents/lbs",type="l")
+lines(timex,p2,col="mistyrose",lwd=3)
+```
+
+The original equation is a good approximation to the new price equation for `t` near zero because as `t` approaches zero, $0.00004t^2$ approaches zero and thus making the new equation equivalent to the original equation.
+
+*b. Find the best time to sell the pig.  Use the Five Step Method and model as a one variable optimization problem.*
+
+Step 1:
+**Variables**
+$$t = time (days)$$
+$$w = weight of the pig (lbs)$$
+$$p = price of the pig (dollars/lbs)$$
+$$c = cost of keeping the pig t days (dollars)$$
+$$R = revenue obtained by selling the pig (dollars)$$
+$$P = profit from sale of pig (dollars)$$
+
+**Assumptions**
+$$w = 200 + 5t$$
+$$p = 0.65 - 0.01t + 0.00004t^2$$
+$$c = 0.45t$$
+$$R = pw$$
+$$P = R - c$$
+$$t >= 0$$
+
+Objective: Maximize `P`.
+
+Step2: **Modeling Approach**
+
+"In Calculus, a local maximum point on a function is a point (x,y) on the graph of the function whose y coordinate is larger than all other y coordinates on the graph of points "close to" (x,y). More precisely, (x,f(x)) is a local maximum if there is an interval (a,b) with a<x<b and f(x)>= f(z) for every z in (a,b).
+
+Fermat's Theorem states that if f(x) has a local extremum at x = a and f is differentiable at a, then f'(a) = 0. 
+
+Any valye of x for which f'(x) is zero or undefined is called a critical value for f.
+
+The critical points of a cubic equation are those values of x where the slope of the cubic function is zero. They are found by setting derivative of cubic equation equal to zero obtaining f'(x)= $3ax^2 + 2bx + C =0$.  The solutions of that equation are the critical points of the cubic equation" - wikipedia
+
+Step 3: **Formulate the Model**
+$$P = (0.65 - 0.01t + 0.00004t^2)(200 + 5t) - 0.45t$$
+$$P = 130 + 0.8t - 0.042t^2 + 0.0002t^3$$
+
+let f(x) = P; x = t
+
+x >= 0.
+
+Step 4: **Solve the Model**
+
+$$f(x) = 130 + 0.8x - 0.042x^2 + 0.0002x^3$$
+$$f'(x) = 0.8 - 0.084x + 0.0006x^2$$
+$$0 = 0.8 - 0.084x + 0.0006x^2$$
+
+```{r, echo=FALSE, fig.height=4,fig.width=10}
+param <- matrix(c(0.8,-0.084,0.0006),ncol=1)
+polyroot(param)
+x0 <- seq(0,150,length=1000)
+p0 <- 130 + 0.8*x0 - 0.042*x0^2 + 0.0002*x0^3
+plot(x0,p0,type="l",lwd=3,col="steelblue",xlab="Time to Sell",ylab="Profit in dollars", main="Profit for Every Length of Time")
+```
+
+```{r, echo=FALSE}
+x1 <- c(5,10,50,100,130)
+p1 <- 130 + 0.8*x1 - 0.042*x1^2 + 0.0002*x1^3
+xp <- data.frame(time=x1,profit=p1)
+kable(xp)
+```
+
+There are two possible values of `x` and these are the critical points in our graph. Looking at the graph, we can see that approximately 10 days is the local maximum. 
+
+Step 5:
+Thus, the best time to sell the pig is after 10 days with maximum profit of 134 dollars.
+
+*c. The parameter 0.00004 represents the rate at which price is leveling off. Conduct a sensitivity analysis on this parameter. Consider both the optimal time to sell and the resulting profit.*
+
+**Sensitivity analysis on the parameter 0.00004**
+
+We will now consider the different value of this parameter, so we set it to `k` making the `p` as 
+
+$$p = 0.65 - 0.01x + kx^2$$
+$$f(x) = (0.65 - 0.01x + kx^2)(200 + 5x) - 0.45x$$
+$$f(x) = 130 + 0.8x - 0.05x^2 + 200kx^2 + 5kx^3$$
+$$f'(x) = 0.8 - 0.1x + 400kx + 15kx^2$$
+$$0 = 0.8 - 0.1x + 400kx + 15kx^2$$
+
+This is inconvenient to solve, so we will consider different values of `k`. 
+
+```{r, echo=FALSE}
+k <- c(0.000004, 0.00004,0.0004,0.004)
+x2 <- polyroot(c(0.8,-0.0984,0.00006))
+x3 <- polyroot(c(0.8,-0.084,0.0006))
+x4 <- polyroot(c(0.8,0.06,0.006))
+x5 <- polyroot(c(0.8,1.5,0.06))
+xx <- c(x2,x3,x4,x5)
+pp <- 130 + 0.8*xx - 0.042*xx^2 + 0.0002*xx^3
+mytable <- data.frame(parameter=rep(k,each=2),time=xx,profit= pp)
+kable(mytable)
+```
+
+Looking at the table, we can actually see which values profit we can drop so we can have one value for every parameter k.
+
+```{r, echo=FALSE}
+mytable1 <- mytable[c(1,3,5,7),]
+kable(mytable1)
+```
+
+**Sensitivity Analysis: Parameter k and Optimal Time to Sell**
+
+This time, sensitivity is calculated using difference quotient.
+$$S(x,k) = (dx/dk)(k/x)$$
+$$S(x,k) = (8.1707897-10.2784238)/(0.000004-0.00004)*(0.00004/10.2784238)$$
+
+```{r, echo=FALSE}
+sensitivity <- (8.1707897-10.2784238)/(0.000004-0.00004)
+sensitivity1 <- sensitivity*(0.00004/10.2784238)
+```
+
+The sensitivity of time to parameter `k` is `r sensitivity1`. Hence, for every 1 percent increase in parameter k, we will wait 0.23% longer to sell the pig.
+
+**Sensitivity Analysis: Parameter k and Profit**
+
+We take the profit sensitivity similarly. 
+
+$$S(f(x),k) = (df(x)/dk)(k/f(x))$$
+$$S(f(x),k) = (133.8417-134.00278)/(0.000004-0.00004)*(0.00004/134.00278)$$
+
+```{r, echo=FALSE}
+sensitivity2 <- (133.8417-134.00278)/(0.000004-0.00004)
+sensitivity3 <- sensitivity2*(0.00004/134.00278)
+```
+
+The sensitivity of profit to parameter `k` is `r sensitivity3`. This is quite small. Thus, the profit is not that sensitivity to parameter `k`.
+
+*d. Compare the results of part (b) to the optimal solution contained in the text. Comment on the robustness of our assumptions about price.*
+
+The resulting profit is robust even though the predicted sale date is very sensitive to the model.
+
