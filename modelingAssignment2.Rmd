@@ -1,0 +1,322 @@
+---
+title: "Mathematical Modeling: Assignment 2"
+author: Rhyz C. Gomez, Jasper Montero, Sisteta Kamdon
+date: December 19, 2015
+output: pdf_document
+---
+
+**A local daily newspaper has recently been acquired by a large media conglomerate.
+The paper currently sells for $1.50/week and has a circulation
+of 80,000 subscribers. Advertising sells for $250/page, and the paper
+currently sells 350 pages/week (50 pages/day). The new management is
+looking for ways to increase profits. It is estimated that an increase of
+ten cents/week in the subscription price will cause a drop in circulation
+of 5,000 subscribers. Increasing the price of advertising by $100/page will
+cause the paper to lose approximately 50 pages of advertising per week.The loss of advertising will also affect circulation, since one of the reasons
+people buy the paper is for the advertisements. It is estimated that a loss
+of 50 pages of advertisements per week will reduce circulation by 1,000
+subscriptions.**
+
+
+*(a) Find the weekly subscription price and the advertising price that
+will maximize profit. Use the five-step method, and model as an
+unconstrained optimization problem.*
+
+
+**Step 1: Variables and Assumptions**
+
+$k -$ number of times the subscription price increased
+
+$j -$ number of times the advertising price increased
+
+$s -$ subscription price in dollars
+
+$a -$ advertising price per page
+
+$P -$ profit per week
+
+$1.50/week -$ current subscription price in dollars
+
+$80,000 -$ current circulation at 1.50 dollars subscription price
+
+$250/page -$ current advertising price in dollars
+
+$350pages/week -$ number of pages sold at 250 dollars advertising price
+
+$350 - 50j -$ amount of pages sold with an increase in advertising price
+
+$80,000 - 5,000k - 1000j -$ circulation with increase in prices
+
+$s = (1.50 + 0.10k)$
+
+$a = (250 + 100j)$
+
+$P = a(350 - 50j) + s(80,000 - 5,000k - 1000j)$
+
+where *k*, *j*, *a*, and *s* $\ge 0$
+
+
+**Step 2: Modeling Approach**
+
+"We are given a function $y = f(x_1,...,x_n)$ on a subset *S* of the
+n-dimensional space $R^n$. We wish to find the maximum and/or minimum
+values of *f* on the set *S*. There is a theorem that states that if
+*f* attains its maximum or minimum at an interior point $(x_1,...,x_n)$
+in *S*, then  gradient of *f* is 0 at that point, assuming that *f* is differentiable
+at that point. In other words, at the extreme point
+
+$$\frac{df}{dx_1}(x_1,...,x_n) = 0$$
+$$.$$
+$$.$$
+$$.$$
+
+$$\frac{df}{dx_n}(x_1,...,x_n) = 0$$
+
+The theorem allows us to rule out as a candidate for max-min any
+point in the interior of *S* for which any of the partial derivatives of *f* do not equal zero. Thus, to find the max-min points we must solve
+simultaneously the n equations in n unknowns defined by the equations. Then we must also check any points on the boundary of S,
+as well as any points where one or more of the partial derivatives is
+undefined." - *Meerschaert, M. Mathematical Modeling 4th Edition.*
+
+**Step 3: Formulation of the Model**
+
+Let
+
+$P = s(80,000 - 5000k - 1000j) + a(350 - 50j)$
+
+$P = (1.50 + 0.1k)(80,000 - 5000k - 1000j) + (250 + 100j)(350 - 50j)$
+
+let $y = P$, the variable to be maximized, and let $x_1 = k$ and $x_2 = j$ be the decision variables. Thus, 
+
+$y = f(x_1,x_2)$
+
+$y = (1.50 + 0.1x_1)(80,000 - 5000x_1 - 1000x_2) + (250 + 100x_2)(350 - 50x_2)$
+
+over the set
+
+$S = {(x_1,x_2): x_1 \ge 0, x_2 \ge 0}$
+
+
+
+**Step 4: Solve the Model**
+
+$y = 207,500 + 500x_1 + 21,000x_2 - 100x_1x_2 - 500x_1^2 - 5000x_2^2$
+
+
+$\frac{dy}{dx_1} = 500 - 100x_2 - 1000x_1 = 0$
+
+$\frac{dy}{dx_2} = 21,000 - 100x_1 - 10,000x_2 = 0$
+
+Solving for $x_1$ and $x_2$, 
+
+$x_2 = \frac{2095}{999} = 2.0971$
+
+$x_1 = \frac{290}{999} = 0.29029$
+
+
+Therefore, the profit is $229,592.09 when the company gives $1.5 + .1*0.29 =$ $1.53 of subscription price and an advertising price of $250 + 100*2.0971 =$ $459.71.  
+
+**Step 5: Answer the Question**
+
+With the results above, the company should leave the subscription price at $1.50 per week and increase the advertising price at $450. This will give a profit of $229,500.
+
+
+*(b) Examine the sensitivity of your conclusions in part (a) to the assumption
+of 5,000 lost sales when the price of the paper increases by
+ten cents.*
+
+**Sensitivity analysis on the decrease on circulation**
+
+Assume that the decrease in circulation is not 5,000. Instead, we replace it with *n*. Then, 
+
+$y = (1.50 + 0.1x_1)(80,000 - nx_1 - 1000x_2) + (250 + 100x_2)(350 - 50x_2)$
+
+$y=207,500 + 21,000x_2 - 1.5nx_1 + 8,000x_1 - 0.1nx_1^2 -100x_1x_2 - 5,000x_2^2$
+
+$y=207,500 + 21,000x_2 - 1.5nx_1 + 8,000x_1 - 0.1nx_1^2 - 100x_1x_2 -5,000x_2^2$
+
+$\frac{dy}{dx_1} = -1.5n + 8,000 - 0.2nx_1 - 100x_2 = 0$
+
+$\frac{dy}{dx_2} = 21,000 - 100x_1 - 10,000x_2 = 0$
+
+$$x_1 = \frac{779,000 - 150n}{20n - 100}$$
+
+$$x_2 = \frac{7790000-1500n}{-10,000(2n - 10)} + \frac{21}{10}$$
+
+This implies that,
+
+$s = 1.5 + 0.1x_1$
+
+$s = 1.5 + \frac{77,900 - 15n}{20n - 100}$
+
+$$\frac{ds}{dn} = \frac{-1,556,500}{(20n - 100)^2}$$
+
+At n = 5,000 and s = 1.5, the sensitivity of the subscription price to the amount of decrease in circulation is the following:
+
+$$S(s,n) = \frac{-1,556,500}{(20n - 100)^2} * \frac{n}{s}$$
+
+$$S(s,n) = \frac{-1,556,500}{9,980,010,000} * \frac{5,000}{1.5}$$
+
+$$S(s,n) = -0.51987$$
+
+```{r, echo=FALSE,fig.width=6,fig.height=4}
+n = seq(1000,7000,length=1000)
+x1 = ((779000-150*n)/(20*n-100))*0.1 + 1.5
+plot(n,x1,main="Sensitivity of Subscription price",xlab="decrease on circulation",ylab="Subscription price",type = "l",col="springgreen", lwd=1.5)
+
+```
+
+
+Hence, the subscription price is very sensitive to the number of decrease in circulation with a 10% increase in subscription price will lead to a 5.2% decrease in number of subscription. 
+
+On the other hand, 
+
+$a = 250 + 100x_2$
+
+$a = 460 + \frac{7,790,000 - 1,500n}{-100(2n - 10)}$
+
+$$\frac{da}{dn} = \frac{1,556,500,000}{(1000 - 200n)^2}$$
+
+This follows that the sensitivity of advertising price to the amount of decrease of circulation is as follows:
+
+At n = 5000 and a = 450
+
+$$S(a,n) = \frac{da}{dn}* \frac{n}{a}$$
+
+$$S(a,n) = 0.017$$
+
+```{r, echo=FALSE,fig.width=6,fig.height=4}
+n = seq(1000,7000,length=1000)
+x2 = 460 + (7790000-1500*n)/(-100*(2*n-10))
+plot(n,x2,main="Sensitivity of Advertising Price",xlab="decrease on circulation",ylab="Advertising Price",type = "l",col="steelblue", lwd=1.5)
+```
+
+Thus, the advertising price is not that sensitive to the decrease in circulation.
+
+Lastly, we need to see the sensitivity of the profit to the amount of decrease in circulation.
+
+Since, $x_1 = \frac{77,900-15n}{2n-10}$ and $x_2 = \frac{77,900-15n}{1,000-200n} + \frac{21}{10}$, then,
+
+$y = 229550 + 290\frac{77900-15n}{2n-10} - 499.5(\frac{77900-15n}{2n-10})^2$ 
+
+```{r, echo=FALSE,fig.width=6,fig.height=5}
+library(knitr)
+n = seq(1000,7000,length=1000)
+x1 = ((779000-150*n)/(20*n-100))
+x2 = ((7790000-1500*n)/(-10000*(2*n-10))) + 21/10
+y = 207500 + 500*x1 + 21000*x2 - 100*x1*x2 - 500*(x1^2)-5000*(x2^2)
+plot(n,y/100,main="Sensitivity of Profit",xlab="decrease on circulation",ylab="Profit in 100 dollars",type = "l",col="thistle", lwd=1.5)
+a = c(4800,4900,5000,5100,5200)
+x10 = ((779000-150*a)/(20*a-100))
+x20 = ((7790000-1500*a)/(-10000*(2*a-10))) + 21/10
+y0 = 207500 + 500*x10 + 21000*x20 - 100*x10*x20 - 500*(x10^2)-5000*(x20^2)
+profitandcirc = data.frame(circulation=a,profit=y0)
+kable(profitandcirc)
+```
+
+For the profit sensitivity, we will use the difference ratio and the table above.
+
+$$\frac{dy}{dn} = \frac{229592.1-229580.4}{5000-5100}*\frac{5000}{229500}$$
+
+$$S(y,n) = -0.00254902$$
+
+This implies that the profit is not that sensitive to the amount of decrease in subscription.
+
+
+*(c) Examine the sensitivity of your conclusions in part (a) to the assumption
+of 50 pages/week of lost advertising sales when the price of
+advertising is increased by $100/page.*
+
+Now to test the sensitivity of the prices and profit to the amount of decrease in pages. Assume the decrease in number of pages is not 50 but *p*, then,
+
+$y = (1.50 + 0.1x_1)(80,000 - 5,000x_1 - 1000x_2) + (250 + 100x_2)(350-px_2)$
+
+$y = 207,500 + 500x_1 + 33500x_2 - 500x_1^2 - 100x_1x_2 - 100px_2^2 - 250px_2$
+
+$$\frac{dy}{dx_1} = 500 - 1000x_1 - 100x_2 = 0$$
+
+$$\frac{dy}{dx_2} = 33500 - 100x_1 - 200px_2 - 250p = 0$$
+
+Solving for $x_1$ and $x_2$, 
+
+$$x_1 = \frac{1}{2} - \frac{334500-2500p}{1000(20p-1)}$$
+
+$$x_2 = \frac{334500-2500p}{2000p - 100}$$
+
+Thus,
+
+$$a =  250 + 100\frac{334500-2500p}{2000p - 100}$$
+
+$$s = 1.55 - \frac{334500-2500p}{10000(20p-1)}$$
+
+To test the sensitivity of advertising price to the amount of decrease in pages, we find the derivative of *a*. Thus follows,
+
+$$\frac{da}{dp} = 100\frac{-668750000}{(2000p - 100)^2}$$
+
+$$S(a,p) = \frac{da}{dp} * \frac{p}{a}$$
+
+At p = 50 and a = 450, 
+
+$S(a,p) = - 0.7445$
+
+This implies that the advertising price is sensitive to the amount of decrease in pages with a 100% increase in the amount of decrease will result to 74% decrease in the advertising price.
+
+```{r, echo=FALSE,fig.width=6,fig.height=4}
+n2 = seq(10,100,length=1000)
+a =  250 + 100*(334500-2500*n2)/(2000*n2 - 100)
+plot(n2,a,main="Sensitivity of Advertising Price",xlab="Amount of Decrease in Pages",ylab="Advertising Price",type = "l",col="steelblue", lwd=1.5)
+```
+
+
+On the other hand, for the sensitivity of subscription price to the decrease on the number of pages can be calculated as follows:
+
+$$s =  1.55 - \frac{334500-2500p}{10000(20p-1)}$$
+
+$$\frac{ds}{dp} = \frac{6.6875x10^{10}}{(10000(20p-1))^2}$$
+
+$$S(s,p) = \frac{ds}{dp} * \frac{p}{s}$$
+
+At p = 50 and s = 1.5,
+
+$$S(s,p) = 0.022$$
+
+```{r, echo=FALSE,fig.width=6,fig.height=4}
+n2 = seq(10,100,length=1000)
+s =  1.55 - (334500-2500*n2)/(10000*(20*n2-1))
+plot(n2,s,main="Sensitivity of Subscription Price",xlab="Amount of Decrease in Pages",ylab="Subscription Price",type = "l",col="tomato", lwd=1.5)
+```
+
+Thus, the subscription price is not as sensitive to the amount of decrease in pages. 
+
+Lastly, the sensitivity of profit to the amount of decrease in pages using difference ratio.
+
+
+```{r, echo=FALSE,fig.width=6,fig.height=4}
+p = seq(10,100,length=1000)
+x1 = 1/2 - ((334500-2500*p)/(1000*(20*p-1)))
+x2 = (334500-2500*p)/(2000*p-100)
+y = 207500 + 500*x1 + 21000*x2 - 100*x1*x2 - 500*(x1^2)-5000*(x2^2)
+plot(p,y/100,main="Sensitivity of Profit",xlab="decrease on Pages",ylab="Profit in 100 dollars",type = "l",col="thistle", lwd=1.5)
+a = c(30,40,50,60,70)
+x10 = 1/2 - ((334500-2500*a)/(1000*(20*a-1)))
+x20 = (334500-2500*a)/(2000*a-100)
+y0 = 207500 + 500*x10 + 21000*x20 - 100*x10*x20 - 500*(x10^2)-5000*(x20^2)
+profitandpages = data.frame(pagesdecrease=a,profit=y0)
+kable(profitandpages)
+```
+
+Using the table above, 
+
+$$S(y,p) = \frac{229592.1-228035.1}{50-60}*\frac{50}{229592.1}$$
+
+$$S(y,p) = -0.03390796$$
+
+The optimal profit is not very sensitive to the amount of decrease in pages.
+
+*(d) Advertisers who currently place advertisements in the newspaper
+have the option of using direct mail to reach their customers. Direct
+mail would cost the equivalent of $500/page of newspaper advertising.
+How does this information alter your conclusions in part
+(a)?*
+
+The advertising price of the company should be lower than $450 to be competitive with the direct mail option since $450 is close to $500. This might prevent advertisers to choose the other option.
